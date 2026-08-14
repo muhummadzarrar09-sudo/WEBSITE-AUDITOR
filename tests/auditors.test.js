@@ -1,5 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
 import * as cheerio from 'cheerio';
 import { auditSecurity } from '../src/auditors/security.js';
 import { auditPerformance } from '../src/auditors/performance.js';
@@ -7,6 +8,8 @@ import { auditSeo } from '../src/auditors/seo.js';
 import { auditAccessibility } from '../src/auditors/accessibility.js';
 import { auditBestPractices } from '../src/auditors/bestPractices.js';
 import { detectTechStack } from '../src/auditors/techStack.js';
+import { compareWebsites } from '../src/auditors/comparator.js';
+import { generateSocialCard } from '../src/exporters/cardGenerator.js';
 import { runAudit } from '../src/index.js';
 import { exportLoraDataset } from '../src/ai/loraDatasetExporter.js';
 
@@ -124,6 +127,23 @@ describe('Auditors Test Suite', () => {
 
     const loraExport = await exportLoraDataset(report, '/tmp/test_lora.jsonl');
     assert.ok(loraExport.totalPairs >= 3);
+  });
+
+  test('head-to-head compareWebsites battle works', async () => {
+    const battle = await compareWebsites('saas', 'roast');
+    assert.ok(battle.siteA);
+    assert.ok(battle.siteB);
+    assert.ok(battle.overallWinner.includes('saas'));
+    assert.ok(battle.categoryComparisons.length === 5);
+  });
+
+  test('generateSocialCard exports a valid SVG file', async () => {
+    const report = await runAudit('saas');
+    const svgPath = '/tmp/test_card.svg';
+    await generateSocialCard(report, svgPath);
+    const content = await fs.readFile(svgPath, 'utf8');
+    assert.ok(content.includes('<svg'));
+    assert.ok(content.includes('OVERALL HEALTH SCORE'));
   });
 
 });
