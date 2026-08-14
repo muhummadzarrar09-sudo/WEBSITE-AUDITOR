@@ -1,0 +1,42 @@
+{
+  "name": "website-auditor",
+  "version": "1.0.0",
+  "description": "Ultra-fast, deep website audit CLI with AI intelligence, LoRA adapters, QLoRA dataset exporter, and cyberpunk dashboard",
+  "main": "src/index.js",
+  "bin": {
+    "website-auditor": "./bin/cli.js",
+    "audit": "./bin/cli.js",
+    "wabam": "./bin/cli.js"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node bin/cli.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": [
+    "website-auditor",
+    "cli",
+    "seo",
+    "security",
+    "performance",
+    "accessibility",
+    "lora",
+    "qlora",
+    "ai",
+    "llm"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.19.0",
+    "boxen": "^8.0.1",
+    "chalk": "^6.0.0",
+    "cheerio": "^1.2.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^15.0.0",
+    "dotenv": "^17.4.2",
+    "gradient-string": "^3.0.0",
+    "open": "^11.0.1",
+    "ora": "^9.4.1"
+  }
+}

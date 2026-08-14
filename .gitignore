@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+*.log
+dataset.jsonl
+report.html
+report.json
+report.md
+card.svg
+*.svg.tmp
